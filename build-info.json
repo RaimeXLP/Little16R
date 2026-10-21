@@ -1,8 +1,8 @@
 {
   "package": "io.github.raimexlp.little16r",
-  "version": "0.1.0~alpha1+build.8.1",
+  "version": "0.2.0~alpha1+build.10.1",
   "architecture": "iphoneos-arm",
-  "source_commit": "49d2b4356b43b984d339bbe081887655c4f4563e",
-  "build_url": "https://github.com/RaimeXLP/little16r/actions/runs/39657894616",
-  "sha256": "8a58c8182f4545fed96afd804c422e6527768f606ea2c183ae58a3f4fa467ea1"
+  "source_commit": "95d2aba81f5e569230345df8e1042a9803d1d249",
+  "build_url": "https://github.com/RaimeXLP/little16r/actions/runs/39660066344",
+  "sha256": "77ac8214871a9e6db5dfb2926f7bef4b0effd97c37c45d96fa902d5ae261fa96"
 }
