@@ -1,6 +1,7 @@
 #import <Preferences/PSListController.h>
 #import <Preferences/PSSpecifier.h>
 #import "../L16RPreferences.h"
+#include <dlfcn.h>
 
 // Only the interfaces used here; no third-party implementation is imported.
 @interface SBSRelaunchAction : NSObject
@@ -49,6 +50,10 @@
     [alert addAction:[UIAlertAction actionWithTitle:@"Abbrechen" style:UIAlertActionStyleCancel handler:nil]];
     [alert addAction:[UIAlertAction actionWithTitle:@"Respring" style:UIAlertActionStyleDefault
         handler:^(__unused UIAlertAction *action) {
+            // Resolve the optional relaunch API at runtime. These frameworks
+            // are provided by iOS; they are neither bundled nor linked to SDK stubs.
+            dlopen("/System/Library/PrivateFrameworks/FrontBoardServices.framework/FrontBoardServices", RTLD_LAZY);
+            dlopen("/System/Library/PrivateFrameworks/SpringBoardServices.framework/SpringBoardServices", RTLD_LAZY);
             Class actionClass = NSClassFromString(@"SBSRelaunchAction");
             Class serviceClass = NSClassFromString(@"FBSSystemService");
             if (![actionClass respondsToSelector:@selector(actionWithReason:options:targetURL:)] ||

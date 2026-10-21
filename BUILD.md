@@ -83,6 +83,14 @@ The `preferences` subproject builds an arm64 PreferenceLoader bundle under
 `preferenceloader`. CI checks the bundle executable, resources, loader entry and
 architecture as well as the SpringBoard dylib and postinst.
 
+Apple's standard SDK does not include the private Preferences linker stub. CI
+downloads only `Preferences.tbd` from the pinned Theos SDK revision recorded in
+the workflow, verifies its SHA-256, and points `LITTLE16R_PRIVATE_FRAMEWORKS_DIR`
+at the containing framework directory. This is build-only input; no Apple
+framework or stub is included in the `.deb`. Local builds need a patched Theos
+SDK with Preferences or the same framework search path. The optional relaunch
+frameworks are opened from their iOS system paths at runtime.
+
 `L16RPreferences.h` shares the domain `io.github.raimexlp.little16r` and boolean key
 `ShowHomebar` between the preference pane and SpringBoard. CFPreferences persists
 the switch. Missing or malformed values mean off. Changes are applied at the next

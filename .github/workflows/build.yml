@@ -48,6 +48,18 @@ jobs:
           xcodebuild -version
           xcrun --sdk iphoneos --show-sdk-path
 
+      - name: Fetch pinned Preferences linker stub
+        shell: bash
+        run: |
+          set -euo pipefail
+          frameworks="$RUNNER_TEMP/little16r-private-frameworks"
+          mkdir -p "$frameworks/Preferences.framework"
+          stub="$frameworks/Preferences.framework/Preferences.tbd"
+          curl --fail --location --retry 3 --output "$stub" \
+            https://raw.githubusercontent.com/theos/sdks/0222fd5413cf4b9af096f37b4621afa2688572f7/iPhoneOS14.5.sdk/System/Library/PrivateFrameworks/Preferences.framework/Preferences.tbd
+          printf '11c41f5b5e5f3e713497fe8b89e1aaa342b27111db6bd61e066758844b9f2d3f  %s\n' "$stub" | shasum -a 256 --check
+          printf 'LITTLE16R_PRIVATE_FRAMEWORKS_DIR=%s\n' "$frameworks" >> "$GITHUB_ENV"
+
       - name: Build rootful package
         run: gmake clean package PACKAGE_VERSION="$LITTLE16R_PACKAGE_VERSION"
 
