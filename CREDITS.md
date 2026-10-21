@@ -33,7 +33,7 @@ scope.
 
 No license file was found in that Little16 reference at the time of inspection.
 If Michael would prefer this project and its package source to be taken offline,
-Leon is happy to do so; please [open an issue](https://github.com/RaimeXLP/Little16R/issues/new).
+Leon is happy to do so; please [open an issue](https://github.com/RaimeXLP/little16r/issues/new).
 Credit corrections and additional source information are welcome through the
 same route.
 
@@ -66,6 +66,7 @@ provenance for Little16 itself.
 | [Homebrew](https://brew.sh/) | Installs the macOS CI build dependencies. |
 | [Git](https://git-scm.com/), [GitHub Actions](https://github.com/actions), and [GitHub Pages](https://pages.github.com/) | Source control, hosted builds, official checkout/artifact/Pages actions, package archival, and package-source hosting. The workflow records exact action revisions. |
 | [Sileo and its contributors](https://github.com/Sileo/Sileo) | The package manager targeted by the published APT source. Sileo itself is not bundled in the tweak. |
+| [palera1n repository page](https://github.com/palera1n/repo.palera.in/blob/main/index.html), and the Sileo, Cydia, Zebra, Installer and Saily developers | Reference examples for the package managers' add-source URL schemes used by the independently written repository page. No manager icons or page design were copied. |
 | [actionlint / rhysd](https://github.com/rhysd/actionlint) | Used to validate the GitHub Actions workflow during development. |
 | ChatGPT / Codex | Development assistance while preparing and debugging the prototype, documentation, build workflow, and repository tooling. |
 
@@ -79,4 +80,4 @@ has not yet been recorded.
 Future code imports must record the author, original URL, exact revision, license
 or permission, affected files, and required notices here and alongside the code.
 If a reference or contribution is missing or described incorrectly, please
-[open an issue](https://github.com/RaimeXLP/Little16R/issues/new) so it can be fixed.
+[open an issue](https://github.com/RaimeXLP/little16r/issues/new) so it can be fixed.

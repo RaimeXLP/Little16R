@@ -4,7 +4,7 @@
 
 The experimental prototype has successfully compiled in GitHub Actions and passed
 rootful package layout and arm64 checks. It has not yet been run on an iPhone.
-Compiled packages are published at https://raimexlp.github.io/Little16R/.
+Compiled packages are published at https://raimexlp.github.io/little16r/.
 
 ## Build on GitHub
 

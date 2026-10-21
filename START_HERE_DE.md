@@ -4,7 +4,13 @@
 
 Öffne **Sileo → Quellen → +** und füge diese Adresse hinzu:
 
-**https://raimexlp.github.io/Little16R/**
+**https://raimexlp.github.io/little16r/**
+
+Du kannst die Seite auch direkt auf dem iPhone öffnen und auf **Zu Sileo
+hinzufügen** tippen. Dort gibt es außerdem Buttons für Cydia, Zebra, Installer
+und Saily sowie **Adresse kopieren**. Der jeweilige Paketmanager muss installiert
+sein. Einträge mit der bisherigen Adresse `/Little16R/` bitte durch die neue,
+vollständig kleingeschriebene Adresse ersetzen.
 
 Aktualisiere die Quellen und suche nach **Little16R**. Der Link zum GitHub-Quellcode
 ist eine andere Adresse und wird nicht als Sileo-Quelle eingetragen.

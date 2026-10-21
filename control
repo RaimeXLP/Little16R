@@ -8,4 +8,4 @@ Author: Leon Prinz
 Section: Tweaks
 Depends: mobilesubstrate, firmware (>= 15.0), firmware (<< 16.0)
 Conflicts: com.nahtedetihw.gesturesxv, com.michaelmelita1.little16, com.yourepo.i0s-tweak3r-betas.homegestureios1315, com.yourepo.i0s-tweak3r-betas.homegesture1316
-Homepage: https://github.com/RaimeXLP/Little16R
+Homepage: https://github.com/RaimeXLP/little16r

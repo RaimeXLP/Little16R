@@ -7,7 +7,12 @@ Experimental iPhone X-style gesture navigation for rootful jailbreaks.
 
 Add this package source in **Sileo → Sources → +**:
 
-**https://raimexlp.github.io/Little16R/**
+**https://raimexlp.github.io/little16r/**
+
+On your iPhone, you can also open that page and tap **Add to Sileo**, **Cydia**,
+**Zebra**, **Installer**, or **Saily**. A copy-address button is provided as well.
+The source URL is now entirely lowercase; replace any previously saved source
+using the old `/Little16R/` path.
 
 Refresh sources, search for **Little16R**, install it, and respring. Remove
 competing gesture tweaks before testing. The package requires a **rootful**
@@ -24,7 +29,7 @@ See [START_HERE_DE.md](START_HERE_DE.md) for the German installation guide.
 ## Status and scope
 
 The `0.1.0-alpha1` prototype has successfully compiled and passed rootful package
-layout and arm64 checks in [GitHub Actions](https://github.com/RaimeXLP/Little16R/actions).
+layout and arm64 checks in [GitHub Actions](https://github.com/RaimeXLP/little16r/actions).
 **It has not yet been tested on an iPhone.** A successful build does not confirm
 working gestures, loader compatibility, or a visible Home indicator.
 
@@ -68,7 +73,7 @@ The private gesture selectors researched in Little16 are explicitly acknowledged
 in [CREDITS.md](CREDITS.md).
 
 **If you are the original creator and would prefer this project not to be online,
-please [open an issue](https://github.com/RaimeXLP/Little16R/issues/new). I am happy
+please [open an issue](https://github.com/RaimeXLP/little16r/issues/new). I am happy
 to take the project, the published package source, and its downloads offline.**
 The same contact route is open to contributors who want a credit corrected,
 expanded, or added. I want to handle concerns respectfully and directly.
