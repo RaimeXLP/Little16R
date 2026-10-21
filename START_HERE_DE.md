@@ -22,8 +22,9 @@ iOS 15.8.8. Der genaue Jailbreak und Tweak-Loader müssen dazu passen. Kläre vo
 dem ersten Test auch, wie du den Tweak bei einem SpringBoard-Absturz wieder
 deaktivierst oder entfernst. Entferne andere Gesten-Tweaks vor dem Test.
 
-Der Build und die Paketprüfungen laufen erfolgreich. Die Funktion auf einem
-iPhone ist bisher noch nicht bestätigt; auch die sichtbare Homebar ist offen.
+Der erste Prototyp wurde bereits über Sileo auf Leons iPhone installiert.
+Die neue optionale Homebar und das Einstellungsmenü müssen noch am Gerät geprüft
+werden; ein erfolgreicher Build allein bestätigt diese Funktionen nicht.
 
 ## 3. Paket installieren
 
@@ -37,12 +38,34 @@ die neueste Version. Nach diesem Update wird der Respring angefordert. Ist die
 neueste Version bereits installiert, kannst du sie über **Ändern → Erneut
 installieren** nochmals installieren, um die Abschlussaktion zu erhalten.
 
-Es gibt kein Einstellungsmenü: Der Prototyp versucht
-beim Laden in SpringBoard, die Gesten zu aktivieren.
+Die Wischgesten werden beim Laden in SpringBoard aktiviert. Die sichtbare
+Homebar ist ab Version `0.2.0-alpha1` standardmäßig **aus**.
 
 Teste zuerst Home-Geste, App-Wechsler und Kontrollzentrum. Prüfe die Homebar
 gesondert, auch innerhalb von Apps. Funktioniert etwas nicht, sind der genaue
 Jailbreak, der Tweak-Loader und die `[Little16R]`-Meldungen im Systemlog hilfreich.
+
+## 4. Homebar bei Bedarf einschalten
+
+1. Öffne **Einstellungen → Little16R**. Falls Einstellungen beim Update offen war,
+   schließe die App im App-Wechsler und öffne sie erneut.
+2. Schalte **Homebar anzeigen** ein oder aus.
+3. Tippe auf **Übernehmen & Respring** und bestätige den Respring.
+
+Die Homebar bleibt ohne deine Aktivierung aus. Die Gesten funktionieren unabhängig
+davon. Für das Einstellungsmenü wird PreferenceLoader als Abhängigkeit mitinstalliert.
+
+Bei eingeschalteter Homebar versucht der Tweak, die native Leiste auf dem Homescreen
+und in Apps sichtbar zu halten. Über die Systemeinstellungen der App-Szenen wird
+unten mindestens 21 Punkte Platz reserviert; größere Systemabstände bleiben erhalten.
+Es wird kein Little16R-Code in Apps injiziert. Behält eine App danach noch ihr altes
+Layout, schließe sie im App-Wechsler und öffne sie erneut.
+
+Das ist experimentell: Spiele, ältere Apps und eigene Layouts können den Abstand
+ignorieren. Bei Sperren und Systemübergängen kann die Leiste weiterhin verschwinden.
+Prüfe insbesondere Tastatur, Querformat, Tab-Leisten und Vollbild-Apps. Bei Problemen
+den Schalter wieder ausschalten und übernehmen. Falls der Respring-Button auf deinem
+Jailbreak nicht reagiert, den dort vorhandenen Respring verwenden.
 
 ## Updates und direkter Download
 

@@ -2,12 +2,13 @@
 
 ## Current progress
 
-The 0.1.0-alpha1 prototype has compiled and passed rootful package layout and arm64
-checks in GitHub Actions. Successful builds from main now publish a versioned
-package to the Sileo source through GitHub Pages. Runtime guards, SpringBoard-only
-filtering, rootful metadata, and diagnostic logs are implemented. Loader compatibility,
-device behavior, and Home indicator appearance remain unverified. The checklist below defines
-remaining validation as well as intended design; it is not a list of passed tests.
+The initial prototype compiled, passed rootful/arm64 checks, and was installed
+by Leon through Sileo. Successful main builds publish automatically. Version
+0.2.0-alpha1 adds a PreferenceLoader pane, a Homebar switch defaulting to off,
+and an explicit apply/respring action. Optional SpringBoard hooks attempt to keep
+the native indicator visible and publish bottom scene insets to apps. Native
+host tests cover hook/ABI behavior; device rendering is still unverified.
+The checklist below contains remaining validation, not claims of passed tests.
 
 ## 1. Establish the device environment
 
@@ -21,8 +22,10 @@ remaining validation as well as intended design; it is not a list of passed test
 - Write scoped hooks, loaded into SpringBoard only initially.
 - Add guards for unsupported classes or methods and a diagnostic load message.
 - Implement Home, app-switcher, and Control Center gestures first.
-- Verify the visible Home indicator separately, including whether application
-  processes require additional hooks or layout handling.
+- Verify the optional Homebar on the Home screen and in applications, and confirm
+  that mutable scene inset setters transport the bottom spacing into app processes.
+- Keep the default off and avoid app-process injection unless device evidence
+  establishes a need for it.
 - Do not change status-bar styling, dock behavior, or lock-screen quick actions.
 
 ## 3. Build for rootful
@@ -41,6 +44,10 @@ remaining validation as well as intended design; it is not a list of passed test
 - Test Control Center and Notification Center independently.
 - Test portrait/landscape, keyboard, lock/unlock, and full-screen applications.
 - Check Home indicator visibility and bottom layout in applications.
+- Check Settings → Little16R, default off after an upgrade, saved switch persistence,
+  apply/respring, both toggling directions, and app reopening for cached layouts.
+- Test 21-point bottom spacing with the keyboard, tab bars, Safari, Settings,
+  landscape and games; confirm no accumulated or reduced existing insets.
 - Confirm uninstall restores the original behavior.
 
 Only mark iPhone 7 / iOS 15.8.8 as supported after recording successful device

@@ -1,8 +1,10 @@
 // Little16R: experimental SpringBoard-only navigation for iOS 15.
 // Private selector names are compatibility assumptions, not verified iOS 15.8.8 headers.
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 #import <substrate.h>
+#import "L16RPreferences.h"
 #include <string.h>
 #include <sys/sysctl.h>
 
@@ -17,6 +19,12 @@ static BOOL L16REnabled(id receiver, SEL selector) {
     (void)receiver;
     (void)selector;
     return YES;
+}
+
+static BOOL L16RDisabled(id receiver, SEL selector) {
+    (void)receiver;
+    (void)selector;
+    return NO;
 }
 
 // These private APIs use the value 1 for the modern Control Center gesture/edge.
@@ -63,12 +71,85 @@ static void L16RInstallGetter(L16RGetter hook) {
                     sel_registerName(hook.selectorName), hook.replacement, NULL);
 }
 
+typedef void (*L16RInsetSetter)(id, SEL, UIEdgeInsets);
+static L16RInsetSetter L16ROriginalInsetSetters[4];
+
+static UIEdgeInsets L16RHomebarInsets(UIEdgeInsets insets) {
+    // A compact bottom area for the 4.7-inch screen, in points. Preserve any
+    // larger system inset and all other edges; never accumulate extra padding.
+    if (insets.bottom < 21.0) insets.bottom = 21.0;
+    return insets;
+}
+
+#define L16R_INSET_SETTER(NAME, INDEX) \
+    static void NAME(id receiver, SEL selector, UIEdgeInsets insets) { \
+        L16ROriginalInsetSetters[INDEX](receiver, selector, L16RHomebarInsets(insets)); \
+    }
+L16R_INSET_SETTER(L16RSetPortraitInsets, 0)
+L16R_INSET_SETTER(L16RSetUpsideDownInsets, 1)
+L16R_INSET_SETTER(L16RSetLandscapeLeftInsets, 2)
+L16R_INSET_SETTER(L16RSetLandscapeRightInsets, 3)
+#undef L16R_INSET_SETTER
+
+static BOOL L16RInstallSceneInsets(void) {
+    Class target = objc_getClass("UIMutableApplicationSceneSettings");
+    const char *names[] = {"setSafeAreaInsetsPortrait:",
+        "setSafeAreaInsetsPortraitUpsideDown:", "setSafeAreaInsetsLandscapeLeft:",
+        "setSafeAreaInsetsLandscapeRight:"};
+    const IMP replacements[] = {(IMP)L16RSetPortraitInsets, (IMP)L16RSetUpsideDownInsets,
+        (IMP)L16RSetLandscapeLeftInsets, (IMP)L16RSetLandscapeRightInsets};
+    // Validate the entire orientation group before modifying any method. These
+    // setters change the stored scene settings sent to apps, not just a local
+    // getter's result. App processes do not need Little16R injection.
+    for (size_t index = 0; index < 4; index++) {
+        Method method = target ? class_getInstanceMethod(target, sel_registerName(names[index])) : NULL;
+        NSMethodSignature *signature = method ?
+            [NSMethodSignature signatureWithObjCTypes:method_getTypeEncoding(method)] : nil;
+        if (!signature || signature.numberOfArguments != 3 ||
+            strcmp(signature.methodReturnType, @encode(void)) != 0 ||
+            strcmp([signature getArgumentTypeAtIndex:2], @encode(UIEdgeInsets)) != 0) {
+            NSLog(@"[Little16R] App spacing unavailable: incompatible %s", names[index]);
+            return NO;
+        }
+    }
+    for (size_t index = 0; index < 4; index++) {
+        MSHookMessageEx(target, sel_registerName(names[index]), replacements[index],
+                        (IMP *)&L16ROriginalInsetSetters[index]);
+    }
+    return YES;
+}
+
+static void L16RConfigureHomebar(BOOL showHomebar) {
+    const L16RGetter indicator = {"SBFHomeGrabberSettings", "isEnabled",
+        showHomebar ? (IMP)L16REnabled : (IMP)L16RDisabled, @encode(BOOL)};
+    if (!L16RSupportsGetter(indicator)) return;
+    L16RInstallGetter(indicator);
+    if (!showHomebar) {
+        NSLog(@"[Little16R] Homebar off; application layout unchanged");
+        return;
+    }
+
+    // Keep the native indicator from timing out, without overriding hidden
+    // states used for locking, transitions, or other system-owned overlays.
+    const L16RGetter visibility[] = {
+        {"SBHomeGrabberView", "_autohideEffectivelyEnabled", (IMP)L16RDisabled, @encode(BOOL)},
+        {"UIApplicationSceneClientSettings", "homeIndicatorAutoHidden", (IMP)L16RDisabled, @encode(BOOL)},
+    };
+    for (size_t index = 0; index < sizeof(visibility) / sizeof(visibility[0]); index++) {
+        if (L16RSupportsGetter(visibility[index])) L16RInstallGetter(visibility[index]);
+    }
+    BOOL spacing = L16RInstallSceneInsets();
+    NSLog(@"[Little16R] Homebar on; scene spacing %@; visual device testing required",
+          spacing ? @"installed" : @"unavailable");
+}
+
+#ifndef L16R_UNIT_TEST
 __attribute__((constructor)) static void L16RInitialize(void) {
     @autoreleasepool {
         if (![[NSBundle mainBundle].bundleIdentifier isEqualToString:@"com.apple.springboard"]) {
             return;
         }
-        NSLog(@"[Little16R] 0.1.0-alpha1 loaded into SpringBoard");
+        NSLog(@"[Little16R] 0.2.0-alpha1 loaded into SpringBoard");
         if ([NSProcessInfo processInfo].operatingSystemVersion.majorVersion != 15 ||
             !L16RIsTargetDevice()) {
             NSLog(@"[Little16R] Inactive: prototype restricted to iPhone 7 on iOS 15");
@@ -96,13 +177,10 @@ __attribute__((constructor)) static void L16RInitialize(void) {
             L16RInstallGetter(navigation[index]);
         }
 
-        const L16RGetter indicator = {
-            "SBFHomeGrabberSettings", "isEnabled", (IMP)L16REnabled, @encode(BOOL)
-        };
-        if (L16RSupportsGetter(indicator)) {
-            L16RInstallGetter(indicator);
-            NSLog(@"[Little16R] Home indicator setting enabled; visual behavior requires testing");
-        }
+        // Applied once per SpringBoard launch: a respring rebuilds all scene
+        // settings consistently when switching either on or off.
+        L16RConfigureHomebar(L16RReadShowHomebar());
         NSLog(@"[Little16R] Navigation hooks installed; device verification required");
     }
 }
+#endif

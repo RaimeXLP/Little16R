@@ -31,24 +31,46 @@ The GitHub source-code URL itself is not a Sileo source.
 
 See [START_HERE_DE.md](START_HERE_DE.md) for the German installation guide.
 
+## Optional Homebar
+
+Open **Settings → Little16R → Homebar anzeigen**. The switch defaults to **off**,
+including when upgrading from the original prototype. Gesture navigation stays
+enabled independently. PreferenceLoader is installed as a dependency for this pane.
+
+After changing the switch, tap **Übernehmen & Respring** and confirm. With the
+switch on, Little16R enables the native Home indicator, attempts to prevent its
+normal auto-hide on the Home screen and in apps, and supplies at least 21 points
+of bottom safe area through SpringBoard's application-scene settings. Existing
+larger insets and the other screen edges are preserved. App processes receive no
+Little16R injection. Reopen an affected app from the app switcher if it retains
+its old layout after the respring.
+
+This mode is experimental: games, custom layouts, legacy apps, and system-owned
+screens may ignore the inset or control visibility themselves. The native bar
+can still hide during system transitions and locking. Its appearance, keyboard
+spacing and app layouts need testing on iPhone 7 / iOS 15.8.8. Turning the switch
+off and applying it removes Little16R's optional spacing and auto-hide hooks.
+
 ## Status and scope
 
 The `0.1.0-alpha1` prototype has successfully compiled and passed rootful package
 layout and arm64 checks in [GitHub Actions](https://github.com/RaimeXLP/little16r/actions).
-**It has not yet been tested on an iPhone.** A successful build does not confirm
-working gestures, loader compatibility, or a visible Home indicator.
+Leon has installed the first prototype through Sileo. The optional Homebar and
+Settings pane introduced in `0.2.0-alpha1` still need device testing. A successful
+build does not confirm correct gestures, indicator visibility, or app layout.
 
 The initial target is an iPhone 7 (arm64/A10) on iOS 15.8.8 with a rootful jailbreak.
 Runtime checks currently restrict activation to `iPhone9,1` / `iPhone9,3` on iOS 15.
-There is no Settings pane; the prototype attempts to activate when loaded into
-SpringBoard. It collects or transmits no user data.
+Navigation activates when loaded into SpringBoard; the Settings pane controls
+the optional Homebar. It collects or transmits no user data.
 
 Intended features:
 
 - Swipe up to return Home.
 - Swipe up and hold to open the app switcher.
 - Swipe down from the top-right corner to open Control Center.
-- A visible Home indicator, whose appearance inside applications remains unresolved.
+- An optional persistent native Home indicator and bottom app safe area (experimental,
+  off by default).
 
 An iPad dock, a replacement status bar, and lock-screen quick actions are outside
 the initial scope. See [PLAN.md](PLAN.md) for the remaining device checks and

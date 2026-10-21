@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+    <key>title</key><string>Little16R</string>
+    <key>items</key><array>
+        <dict>
+            <key>cell</key><string>PSGroupCell</string>
+            <key>label</key><string>Homebar</string>
+            <key>footerText</key><string>Standardmäßig aus. Die Wischgesten funktionieren unabhängig von diesem Schalter.</string>
+        </dict>
+        <dict>
+            <key>cell</key><string>PSSwitchCell</string>
+            <key>label</key><string>Homebar anzeigen</string>
+            <key>key</key><string>ShowHomebar</string>
+            <key>defaults</key><string>io.github.raimexlp.little16r</string>
+            <key>default</key><false/>
+        </dict>
+        <dict>
+            <key>cell</key><string>PSGroupCell</string>
+            <key>footerText</key><string>Eingeschaltet: native Homebar auf dem Homescreen und in Apps, mit zusätzlichem unteren App-Abstand (experimentell). Spiele und Apps mit eigenem Layout können diesen Abstand ignorieren. Nach jeder Änderung bitte übernehmen; betroffene Apps gegebenenfalls neu öffnen.</string>
+        </dict>
+        <dict>
+            <key>cell</key><string>PSButtonCell</string>
+            <key>label</key><string>Übernehmen &amp; Respring</string>
+            <key>action</key><string>applySettings</string>
+        </dict>
+        <dict>
+            <key>cell</key><string>PSGroupCell</string>
+            <key>footerText</key><string>Little16R · Leon Prinz / RaimeXLP · iPhone 7 · iOS 15 · Rootful</string>
+        </dict>
+    </array>
+</dict></plist>

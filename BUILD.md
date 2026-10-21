@@ -3,7 +3,8 @@
 ## Status
 
 The experimental prototype has successfully compiled in GitHub Actions and passed
-rootful package layout and arm64 checks. It has not yet been run on an iPhone.
+rootful package layout and arm64 checks. Leon has installed the first prototype;
+the new Homebar mode and preference pane still need device validation.
 Compiled packages are published at https://raimexlp.github.io/little16r/.
 
 ## Build on GitHub
@@ -73,7 +74,34 @@ make clean package
 The resulting package is written under `packages/`. Use the package manager to
 install it only after identifying the active jailbreak/loader and establishing
 a working recovery procedure. Remove competing gesture tweaks first. Respring
-after installation. There is no Settings pane: this prototype activates on load.
+after installation. Navigation activates on load; the optional Homebar is controlled
+under Settings → Little16R and defaults to off.
+
+The `preferences` subproject builds an arm64 PreferenceLoader bundle under
+`/Library/PreferenceBundles/Little16RPrefs.bundle`. Its entry is installed under
+`/Library/PreferenceLoader/Preferences/Little16R.plist`. The package depends on
+`preferenceloader`. CI checks the bundle executable, resources, loader entry and
+architecture as well as the SpringBoard dylib and postinst.
+
+`L16RPreferences.h` shares the domain `io.github.raimexlp.little16r` and boolean key
+`ShowHomebar` between the preference pane and SpringBoard. CFPreferences persists
+the switch. Missing or malformed values mean off. Changes are applied at the next
+SpringBoard launch, through the pane's confirmed `SBSRelaunchAction` request or a
+manual respring. No live preference notification installs/removes hooks mid-session.
+
+When enabled, optional signature-checked hooks disable the grabber's effective
+auto-hide and the app-scene auto-hide request. Four
+`UIMutableApplicationSceneSettings` inset setters store a minimum 21-point bottom
+inset before forwarding to their original implementations, so the native scene
+settings can carry the spacing into apps. This remains SpringBoard-only injection.
+Unsupported inset signatures skip the entire orientation group. The native bar
+and this transport/layout behavior still require on-device verification on iOS 15.
+
+Native macOS tests run the actual runtime hook code against mock Objective-C
+classes, checking default-off behavior, malformed preference values, all four
+orientations, preservation of larger/other-edge insets, and whole-group ABI failure.
+They do not emulate SpringBoard rendering or scene delivery. The same unit-test
+command runs these tests on macOS; Ubuntu skips the native cases.
 
 ## Before the first device test
 
@@ -108,8 +136,10 @@ Look for `[Little16R]` messages in a connected device/system log viewer:
 - `Navigation hooks installed`: hooks were registered, not proof of functional gestures.
 - No message: investigate loader activity, installation paths, or log collection.
 
-The Home indicator getter is experimental. Its appearance inside apps may require
-additional implementation; this version deliberately injects into SpringBoard only.
+`Homebar off` confirms the optional mode is disabled. `scene spacing installed`
+means the four inset setters were hooked; `App spacing unavailable` names a missing
+or mismatched setter. These logs establish hook installation, not rendering or
+correct app layout. Reopen apps retaining cached layouts after a settings change.
 
 To undo a test, remove Little16R in the package manager and respring. If SpringBoard
 is unusable, use the previously verified no-tweak mode before removing the package.

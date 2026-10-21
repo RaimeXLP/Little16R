@@ -23,7 +23,7 @@ The following private interfaces and their intended behavior were researched in
 | `SBHomeGestureSettings.isHomeGestureEnabled` | Entry point for enabling Home gestures. |
 | `CCSControlCenterDefaults._defaultPresentationGesture` | Reference for selecting modern Control Center presentation. |
 | `SBControlCenterController.presentingEdge` | Reference for the modern Control Center edge value. |
-| `SBFHomeGrabberSettings.isEnabled` | Reference for the Home indicator setting; Little16R attempts to enable it and still needs visual device testing. |
+| `SBFHomeGrabberSettings.isEnabled` | Reference for the Home indicator setting; Little16R now makes it optional and defaults it to off. |
 
 Little16R uses a separate Objective-C runtime implementation with device checks,
 method-signature checks, scoped SpringBoard injection, and diagnostic logging.
@@ -53,9 +53,30 @@ provenance for Little16 itself.
 
 ## Runtime interfaces, build tools, and distribution
 
+Additional Homebar/Settings research for version 0.2.0:
+
+- **duraidabdul / Neptune**, [revision `70e9712`](https://github.com/duraidabdul/Neptune/blob/70e97127d49fdd2260a3c1e36dbbad53755963e9/neptune/Tweak.xm):
+  reference for a compact 21-point bottom safe area on older iPhones. Little16R
+  independently hooks stored mutable scene settings in SpringBoard; it does not
+  import Neptune's source, tab-bar resizing, or app-process hooks. Neptune's source
+  is licensed under LGPL-3.0 in its own repository.
+- **xybp888 and iOS-Header contributors**, [iOS 14.5 dumped interfaces](https://github.com/xybp888/iOS-Header/tree/0c23e5a9242f1d8fd04d376c22e88d2ec74c3374/14.5/PrivateFrameworks):
+  research references for `UIMutableApplicationSceneSettings` inset setters,
+  `UIApplicationSceneClientSettings.homeIndicatorAutoHidden`,
+  `SBHomeGrabberView._autohideEffectivelyEnabled`, `SBSRelaunchAction` and
+  `FBSSystemService`. These are older interface references, not verified iOS 15.8.8
+  headers. No dumped header files are bundled; optional hooks check signatures at runtime.
+- **Theos template contributors**, [PreferenceLoader bundle template](https://github.com/theos/templates/tree/6c3944e281c4726f1383755d0fbb642840312d28/ios/preference_bundle):
+  reference for bundle layout, plist specifiers and `PSListController` integration.
+  Little16R's pane and preference handling are independently written.
+- **Thomas Moore, Dustin Howett and PreferenceLoader contributors**,
+  [PreferenceLoader](https://github.com/DHowett/preferenceloader): the package dependency
+  that discovers the Settings entry and loads the preference bundle. Its implementation
+  is not bundled in Little16R.
+
 | Project / maintainer | Actual use in Little16R |
 | --- | --- |
-| [Apple Objective-C runtime](https://developer.apple.com/documentation/objectivec/objective-c-runtime), Foundation, and Xcode | Runtime class/method lookup, signature inspection, logging, compiler, and iPhoneOS SDK. |
+| [Apple Objective-C runtime](https://developer.apple.com/documentation/objectivec/objective-c-runtime), Foundation, CoreFoundation, UIKit, private Preferences/FrontBoardServices/SpringBoardServices, and Xcode | Runtime lookup/signature checks, native Settings UI, CFPreferences storage, scene insets, confirmed respring request, compiler, and iPhoneOS SDK. Private interfaces remain experimental. |
 | [Cydia Substrate / Jay Freeman (saurik)](https://www.cydiasubstrate.com/api/c/MSHookMessageEx/) | The `MSHookMessageEx` API used to install the runtime hooks. A compatible provider is required on the device. |
 | [Theos and its contributors](https://github.com/theos/theos/tree/304e0799973e8145f32e4ca2de6c747a84b758ce) | Pinned build and Debian-packaging framework, including its headers, libraries, and submodules. Their own notices remain with those projects. |
 | [GNU Make](https://www.gnu.org/software/make/) | Runs the Theos build rules. |
@@ -74,8 +95,8 @@ provenance for Little16 itself.
 
 **Leon Prinz ([RaimeXLP](https://github.com/RaimeXLP))** initiated and maintains
 Little16R for an iPhone 7 with a broken Home button, maintains the package source,
-and is the contact for publication and credit concerns. Successful device testing
-has not yet been recorded.
+and is the contact for publication and credit concerns. Leon has installed the
+initial prototype through Sileo; the new optional Homebar still needs device checks.
 
 Future code imports must record the author, original URL, exact revision, license
 or permission, affected files, and required notices here and alongside the code.
