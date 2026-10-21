@@ -55,7 +55,7 @@ jobs:
           test -f "$extraction/Library/MobileSubstrate/DynamicLibraries/Little16R.dylib"
           test -f "$extraction/Library/MobileSubstrate/DynamicLibraries/Little16R.plist"
           test ! -d "$extraction/var/jb"
-          xcrun lipo -verify_arch arm64 "$extraction/Library/MobileSubstrate/DynamicLibraries/Little16R.dylib"
+          xcrun lipo "$extraction/Library/MobileSubstrate/DynamicLibraries/Little16R.dylib" -verify_arch arm64
           xcrun otool -L "$extraction/Library/MobileSubstrate/DynamicLibraries/Little16R.dylib"
 
       - name: Upload package for manual device testing
