@@ -17,7 +17,7 @@
         </dict>
         <dict>
             <key>cell</key><string>PSGroupCell</string>
-            <key>footerText</key><string>Eingeschaltet: native Homebar auf dem Homescreen und in Apps, mit zusätzlichem unteren App-Abstand (experimentell). Spiele und Apps mit eigenem Layout können diesen Abstand ignorieren. Nach jeder Änderung bitte übernehmen; betroffene Apps gegebenenfalls neu öffnen.</string>
+            <key>footerText</key><string>Eingeschaltet: Homebar auf Home- und Sperrbildschirm sowie in Apps, mit zusätzlichem unteren Abstand (experimentell). Spiele und eigene App-Layouts können den Abstand ignorieren. Nach jeder Änderung bitte übernehmen; betroffene Apps gegebenenfalls neu öffnen.</string>
         </dict>
         <dict>
             <key>cell</key><string>PSButtonCell</string>

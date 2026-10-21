@@ -11,9 +11,9 @@ endif
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = Little16R
-Little16R_FILES = Tweak.m
+Little16R_FILES = Tweak.m SurfaceHomebar.m
 Little16R_CFLAGS = -fobjc-arc -Wall -Wextra
-Little16R_FRAMEWORKS = Foundation UIKit CoreFoundation
+Little16R_FRAMEWORKS = Foundation UIKit CoreFoundation QuartzCore
 Little16R_LIBRARIES = substrate
 
 include $(THEOS_MAKE_PATH)/tweak.mk

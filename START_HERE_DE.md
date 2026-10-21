@@ -22,9 +22,12 @@ iOS 15.8.8. Der genaue Jailbreak und Tweak-Loader müssen dazu passen. Kläre vo
 dem ersten Test auch, wie du den Tweak bei einem SpringBoard-Absturz wieder
 deaktivierst oder entfernst. Entferne andere Gesten-Tweaks vor dem Test.
 
-Der erste Prototyp wurde bereits über Sileo auf Leons iPhone installiert.
-Die neue optionale Homebar und das Einstellungsmenü müssen noch am Gerät geprüft
-werden; ein erfolgreicher Build allein bestätigt diese Funktionen nicht.
+Leon hat den Einstellungs-Schalter, den Respring und die App-Anpassung mit
+`0.2.0~alpha1+build.10.1` am iPhone bestätigt, unter anderem in Spotify, Sileo,
+palera1n, Telefon und Safari. Die neue Home-/Sperrbildschirm-Anzeige in
+`0.2.1-alpha1` braucht noch einen Gerätetest. YouTube ließ sich wegen einer
+auf diesem iOS-15-Gerät nicht verfügbaren Aktualisierung nicht sinnvoll testen;
+es gibt keine YouTube-Sonderausnahme.
 
 ## 3. Paket installieren
 
@@ -55,14 +58,15 @@ Jailbreak, der Tweak-Loader und die `[Little16R]`-Meldungen im Systemlog hilfrei
 Die Homebar bleibt ohne deine Aktivierung aus. Die Gesten funktionieren unabhängig
 davon. Für das Einstellungsmenü wird PreferenceLoader als Abhängigkeit mitinstalliert.
 
-Bei eingeschalteter Homebar versucht der Tweak, die native Leiste auf dem Homescreen
-und in Apps sichtbar zu halten. Über die Systemeinstellungen der App-Szenen wird
-unten mindestens 21 Punkte Platz reserviert; größere Systemabstände bleiben erhalten.
-Es wird kein Little16R-Code in Apps injiziert. Behält eine App danach noch ihr altes
-Layout, schließe sie im App-Wechsler und öffne sie erneut.
+Bei eingeschalteter Homebar erhält der Home- und Sperrbildschirm ab `0.2.1-alpha1`
+eine eigene weiße Leiste mit dunklem Schatten, die keine Berührungen abfängt. Apps
+verwenden weiterhin den nativen Indikator; unten werden mindestens 21 Punkte Platz
+reserviert. Größere Systemabstände bleiben erhalten. Es wird kein Little16R-Code
+in Apps injiziert. Behält eine App ihr altes Layout, schließe sie im App-Wechsler
+und öffne sie erneut.
 
 Das ist experimentell: Spiele, ältere Apps und eigene Layouts können den Abstand
-ignorieren. Bei Sperren und Systemübergängen kann die Leiste weiterhin verschwinden.
+ignorieren. Bei Systemübergängen kann die Leiste weiterhin verschwinden.
 Prüfe insbesondere Tastatur, Querformat, Tab-Leisten und Vollbild-Apps. Bei Problemen
 den Schalter wieder ausschalten und übernehmen. Falls der Respring-Button auf deinem
 Jailbreak nicht reagiert, den dort vorhandenen Respring verwenden.

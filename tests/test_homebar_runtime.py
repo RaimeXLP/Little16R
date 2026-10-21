@@ -18,12 +18,13 @@ class HomebarRuntimeTests(unittest.TestCase):
         subprocess.run([
             "xcrun", "clang", "-fobjc-arc", "-fblocks", "-Wall", "-Wextra",
             "-Wno-unused-function", "-framework", "Foundation", "-framework", "CoreGraphics",
+            "-framework", "QuartzCore",
             "-I", str(ROOT / "tests/objc_stubs"),
-            str(ROOT / "tests/homebar_runtime.m"), "-o", str(cls.binary),
-        ], check=True, capture_output=True, text=True)
+            str(ROOT / "tests/homebar_runtime.m"), str(ROOT / "tests/fake_uikit.m"), "-o", str(cls.binary),
+        ], check=True, capture_output=True, text=True, timeout=60)
 
     def check_mode(self, mode):
-        result = subprocess.run([str(self.binary), mode], capture_output=True, text=True)
+        result = subprocess.run([str(self.binary), mode], capture_output=True, text=True, timeout=15)
         self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_off_disables_indicator_without_changing_layout(self):

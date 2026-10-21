@@ -2,6 +2,7 @@
 // No preference files, SpringBoard process, or device are modified by this test.
 #define L16R_UNIT_TEST 1
 #import "../Tweak.m"
+#import "../SurfaceHomebar.m"
 #include <assert.h>
 
 static unsigned hookCount;
@@ -42,6 +43,15 @@ void MSHookMessageEx(Class target, SEL selector, IMP replacement, IMP *original)
 @implementation L16RMockScene
 @end
 
+@interface SBHomeScreenViewController : UIViewController
+@end
+@implementation SBHomeScreenViewController
+@end
+@interface CSCoverSheetViewController : UIViewController
+@end
+@implementation CSCoverSheetViewController
+@end
+
 static void IncorrectSetter(id receiver, SEL selector, double value) {
     (void)receiver; (void)selector; (void)value;
 }
@@ -72,7 +82,7 @@ int main(int argc, const char *argv[]) {
         assert([[UIApplicationSceneClientSettings new] homeIndicatorAutoHidden] == off);
         // One indicator getter while off; no app layout hooks. An incompatible
         // orientation rejects all four inset hooks while preserving navigation.
-        assert(hookCount == (off ? 1U : (badABI ? 3U : 7U)));
+        assert(hookCount == (off ? 1U : (badABI ? 5U : 9U)));
 
         UIEdgeInsets small = {8.0, 4.0, 0.0, 6.0};
         scene.safeAreaInsetsPortrait = small;
@@ -91,6 +101,31 @@ int main(int argc, const char *argv[]) {
         UIEdgeInsets large = {0.0, 0.0, 34.0, 0.0};
         scene.safeAreaInsetsPortrait = large;
         assert(scene.safeAreaInsetsPortrait.bottom == 34.0);
+
+        for (UIViewController *surface in @[[SBHomeScreenViewController new], [CSCoverSheetViewController new]]) {
+            surface.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375, 667)];
+            [surface viewDidLayoutSubviews];
+            assert(surface.layoutPasses == 1);
+            assert(surface.view.subviews.count == (off ? 0U : 1U));
+            if (!off) {
+                UIView *pill = surface.view.subviews.lastObject;
+                assert(!pill.userInteractionEnabled && !pill.isAccessibilityElement && pill.accessibilityElementsHidden);
+                assert(pill.frame.size.width == 134.0 && pill.frame.size.height == 5.0);
+                assert(CGRectGetMaxY(pill.frame) == 659.0);
+                [surface viewDidLayoutSubviews];
+                assert(surface.view.subviews.count == 1 && surface.view.subviews.lastObject == pill);
+                surface.view.bounds = CGRectMake(0, 0, 667, 375);
+                [surface viewDidLayoutSubviews];
+                assert(CGRectGetMidX(pill.frame) == 333.5 && CGRectGetMaxY(pill.frame) == 367.0);
+                [pill removeFromSuperview];
+                [surface viewDidLayoutSubviews];
+                assert(pill.superview == surface.view && surface.view.subviews.count == 1);
+            }
+        }
+        UIViewController *ordinary = [UIViewController new];
+        ordinary.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375, 667)];
+        [ordinary viewDidLayoutSubviews];
+        assert(ordinary.view.subviews.count == 0);
         scene.safeAreaInsetsPortrait = scene.safeAreaInsetsPortrait;
         assert(scene.safeAreaInsetsPortrait.bottom == 34.0);
     }

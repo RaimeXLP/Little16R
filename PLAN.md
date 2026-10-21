@@ -5,9 +5,11 @@
 The initial prototype compiled, passed rootful/arm64 checks, and was installed
 by Leon through Sileo. Successful main builds publish automatically. Version
 0.2.0-alpha1 adds a PreferenceLoader pane, a Homebar switch defaulting to off,
-and an explicit apply/respring action. Optional SpringBoard hooks attempt to keep
-the native indicator visible and publish bottom scene insets to apps. Native
-host tests cover hook/ABI behavior; device rendering is still unverified.
+and an explicit apply/respring action. Leon confirmed those controls and Homebar/
+layout adaptation in Spotify, Sileo, palera1n, Phone and Safari with build 10.1.
+0.2.1 adds the missing Home/Lock screen indicators; these visuals need a device
+retest. YouTube could not be used as a test because an unavailable app update is
+required; no app-specific exception or framework incompatibility is assumed.
 The checklist below contains remaining validation, not claims of passed tests.
 
 ## 1. Establish the device environment
@@ -44,6 +46,8 @@ The checklist below contains remaining validation, not claims of passed tests.
 - Test Control Center and Notification Center independently.
 - Test portrait/landscape, keyboard, lock/unlock, and full-screen applications.
 - Check Home indicator visibility and bottom layout in applications.
+- Retest the new Home/Lock indicators, including lock/unlock, rotation, original
+  view layout, repeated layout calls, and gestures/taps near the indicator.
 - Check Settings → Little16R, default off after an upgrade, saved switch persistence,
   apply/respring, both toggling directions, and app reopening for cached layouts.
 - Test 21-point bottom spacing with the keyboard, tab bars, Safari, Settings,

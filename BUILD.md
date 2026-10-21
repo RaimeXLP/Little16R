@@ -3,8 +3,9 @@
 ## Status
 
 The experimental prototype has successfully compiled in GitHub Actions and passed
-rootful package layout and arm64 checks. Leon has installed the first prototype;
-the new Homebar mode and preference pane still need device validation.
+rootful package layout and arm64 checks. Leon reports working switch/respring and
+app adaptation with build 10.1. The Home/Lock visuals added in 0.2.1 need a device
+retest. YouTube's required update prevented a meaningful compatibility test.
 Compiled packages are published at https://raimexlp.github.io/little16r/.
 
 ## Build on GitHub
@@ -105,10 +106,20 @@ settings can carry the spacing into apps. This remains SpringBoard-only injectio
 Unsupported inset signatures skip the entire orientation group. The native bar
 and this transport/layout behavior still require on-device verification on iOS 15.
 
+`SurfaceHomebar.m` adds the visual missing on the Home/Lock screen. It hooks the
+layout callbacks of `SBHomeScreenViewController` and `CSCoverSheetViewController`,
+forwards the original, and adds/reuses a passive 134×5-point white indicator with
+a dark shadow, 8 points above the host view's bottom edge. It follows the host's
+bounds, ignores touches and accessibility interaction, and leaves the host layout
+untouched. There is no global overlay window or hardware-capability spoofing.
+The native app indicator remains separate. These optional hooks are absent when off.
+
 Native macOS tests run the actual runtime hook code against mock Objective-C
 classes, checking default-off behavior, malformed preference values, all four
 orientations, preservation of larger/other-edge insets, and whole-group ABI failure.
-They do not emulate SpringBoard rendering or scene delivery. The same unit-test
+They also verify original layout forwarding, Home/Lock view ownership, reuse and
+resizing, disabled touch handling, and no indicator on ordinary controllers.
+Minimal UIKit stand-ins do not emulate SpringBoard rendering or scene delivery. The same unit-test
 command runs these tests on macOS; Ubuntu skips the native cases.
 
 ## Before the first device test
@@ -147,7 +158,8 @@ Look for `[Little16R]` messages in a connected device/system log viewer:
 `Homebar off` confirms the optional mode is disabled. `scene spacing installed`
 means the four inset setters were hooked; `App spacing unavailable` names a missing
 or mismatched setter. These logs establish hook installation, not rendering or
-correct app layout. Reopen apps retaining cached layouts after a settings change.
+correct app layout. `Surface indicator installed for ...` identifies each Home/Lock
+controller hook. Reopen apps retaining cached layouts after a settings change.
 
 To undo a test, remove Little16R in the package manager and respring. If SpringBoard
 is unusable, use the previously verified no-tweak mode before removing the package.

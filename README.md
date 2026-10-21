@@ -38,26 +38,30 @@ including when upgrading from the original prototype. Gesture navigation stays
 enabled independently. PreferenceLoader is installed as a dependency for this pane.
 
 After changing the switch, tap **Übernehmen & Respring** and confirm. With the
-switch on, Little16R enables the native Home indicator, attempts to prevent its
-normal auto-hide on the Home screen and in apps, and supplies at least 21 points
-of bottom safe area through SpringBoard's application-scene settings. Existing
-larger insets and the other screen edges are preserved. App processes receive no
-Little16R injection. Reopen an affected app from the app switcher if it retains
+switch on, Little16R enables the native Home indicator in apps and supplies at
+least 21 points of bottom safe area through SpringBoard's application-scene
+settings. Existing larger insets and the other edges are preserved. Version
+`0.2.1-alpha1` adds a passive white indicator with a dark shadow inside each Home
+and Lock screen view; these visuals do not intercept touches. App processes receive
+no Little16R injection. Reopen an affected app from the app switcher if it retains
 its old layout after the respring.
 
 This mode is experimental: games, custom layouts, legacy apps, and system-owned
-screens may ignore the inset or control visibility themselves. The native bar
-can still hide during system transitions and locking. Its appearance, keyboard
-spacing and app layouts need testing on iPhone 7 / iOS 15.8.8. Turning the switch
-off and applying it removes Little16R's optional spacing and auto-hide hooks.
+screens may ignore the inset or control visibility themselves. The new Home/Lock
+visuals need device testing. Turning the switch off and applying it removes
+Little16R's optional visuals, spacing and auto-hide hooks.
 
 ## Status and scope
 
 The `0.1.0-alpha1` prototype has successfully compiled and passed rootful package
 layout and arm64 checks in [GitHub Actions](https://github.com/RaimeXLP/little16r/actions).
-Leon has installed the first prototype through Sileo. The optional Homebar and
-Settings pane introduced in `0.2.0-alpha1` still need device testing. A successful
-build does not confirm correct gestures, indicator visibility, or app layout.
+Leon reports working Settings/respring controls and Homebar/layout adaptation in
+Spotify, Sileo, palera1n, Phone and Safari with `0.2.0~alpha1+build.10.1`. Home/Lock
+screen indicators were missing; `0.2.1-alpha1` adds those visuals for a device retest.
+YouTube could not be used as a compatibility test because it requires an app update
+unavailable on this iOS 15 setup. No app-specific exception is installed, and no
+app-framework incompatibility has been established. These results are not a blanket
+compatibility guarantee.
 
 The initial target is an iPhone 7 (arm64/A10) on iOS 15.8.8 with a rootful jailbreak.
 Runtime checks currently restrict activation to `iPhone9,1` / `iPhone9,3` on iOS 15.
@@ -69,8 +73,8 @@ Intended features:
 - Swipe up to return Home.
 - Swipe up and hold to open the app switcher.
 - Swipe down from the top-right corner to open Control Center.
-- An optional persistent native Home indicator and bottom app safe area (experimental,
-  off by default).
+- An optional Home indicator on Home/Lock screen and in apps, plus bottom app
+  safe area (experimental, off by default).
 
 An iPad dock, a replacement status bar, and lock-screen quick actions are outside
 the initial scope. See [PLAN.md](PLAN.md) for the remaining device checks and

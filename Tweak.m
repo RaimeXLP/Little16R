@@ -5,6 +5,7 @@
 #import <objc/runtime.h>
 #import <substrate.h>
 #import "L16RPreferences.h"
+#import "SurfaceHomebar.h"
 #include <string.h>
 #include <sys/sysctl.h>
 
@@ -139,6 +140,7 @@ static void L16RConfigureHomebar(BOOL showHomebar) {
         if (L16RSupportsGetter(visibility[index])) L16RInstallGetter(visibility[index]);
     }
     BOOL spacing = L16RInstallSceneInsets();
+    L16RInstallSurfaceHomebars();
     NSLog(@"[Little16R] Homebar on; scene spacing %@; visual device testing required",
           spacing ? @"installed" : @"unavailable");
 }
@@ -149,7 +151,7 @@ __attribute__((constructor)) static void L16RInitialize(void) {
         if (![[NSBundle mainBundle].bundleIdentifier isEqualToString:@"com.apple.springboard"]) {
             return;
         }
-        NSLog(@"[Little16R] 0.2.0-alpha1 loaded into SpringBoard");
+        NSLog(@"[Little16R] 0.2.1-alpha1 loaded into SpringBoard");
         if ([NSProcessInfo processInfo].operatingSystemVersion.majorVersion != 15 ||
             !L16RIsTargetDevice()) {
             NSLog(@"[Little16R] Inactive: prototype restricted to iPhone 7 on iOS 15");

@@ -66,6 +66,9 @@ Additional Homebar/Settings research for version 0.2.0:
   `SBHomeGrabberView._autohideEffectivelyEnabled`, `SBSRelaunchAction` and
   `FBSSystemService`. These are older interface references, not verified iOS 15.8.8
   headers. No dumped header files are bundled; optional hooks check signatures at runtime.
+  Version 0.2.1 also uses these references for `SBHomeScreenViewController` and
+  `CSCoverSheetViewController`. The passive Home/Lock indicator is independently
+  implemented with UIKit views and QuartzCore layers; it does not copy another tweak.
 - **Theos template contributors**, [PreferenceLoader bundle template](https://github.com/theos/templates/tree/6c3944e281c4726f1383755d0fbb642840312d28/ios/preference_bundle):
   reference for bundle layout, plist specifiers and `PSListController` integration.
   Little16R's pane and preference handling are independently written.
@@ -76,7 +79,7 @@ Additional Homebar/Settings research for version 0.2.0:
 
 | Project / maintainer | Actual use in Little16R |
 | --- | --- |
-| [Apple Objective-C runtime](https://developer.apple.com/documentation/objectivec/objective-c-runtime), Foundation, CoreFoundation, UIKit, private Preferences/FrontBoardServices/SpringBoardServices, and Xcode | Runtime lookup/signature checks, native Settings UI, CFPreferences storage, scene insets, confirmed respring request, compiler, and iPhoneOS SDK. Private interfaces remain experimental. |
+| [Apple Objective-C runtime](https://developer.apple.com/documentation/objectivec/objective-c-runtime), Foundation, CoreFoundation, UIKit, QuartzCore, private Preferences/FrontBoardServices/SpringBoardServices, and Xcode | Runtime lookup/signature checks, native Settings UI, CFPreferences storage, scene insets, passive Home/Lock indicators, confirmed respring request, compiler, and iPhoneOS SDK. Private interfaces remain experimental. |
 | [Cydia Substrate / Jay Freeman (saurik)](https://www.cydiasubstrate.com/api/c/MSHookMessageEx/) | The `MSHookMessageEx` API used to install the runtime hooks. A compatible provider is required on the device. |
 | [Theos and its contributors](https://github.com/theos/theos/tree/304e0799973e8145f32e4ca2de6c747a84b758ce) | Pinned build and Debian-packaging framework, including its headers, libraries, and submodules. Their own notices remain with those projects. |
 | [Theos SDK maintainers and Apple](https://github.com/theos/sdks/blob/0222fd5413cf4b9af096f37b4621afa2688572f7/iPhoneOS14.5.sdk/System/Library/PrivateFrameworks/Preferences.framework/Preferences.tbd) | Build-only Preferences linker stub from the iOS 14.5 SDK, fetched at a pinned revision with a checked SHA-256. The compiled bundle loads the device's system framework; the stub and Apple framework implementation are not packaged. |
@@ -96,8 +99,9 @@ Additional Homebar/Settings research for version 0.2.0:
 
 **Leon Prinz ([RaimeXLP](https://github.com/RaimeXLP))** initiated and maintains
 Little16R for an iPhone 7 with a broken Home button, maintains the package source,
-and is the contact for publication and credit concerns. Leon has installed the
-initial prototype through Sileo; the new optional Homebar still needs device checks.
+and is the contact for publication and credit concerns. Leon provided the build
+10.1 device results and the missing Home/Lock indicator report. The 0.2.1 visual
+addition still needs his device retest.
 
 Future code imports must record the author, original URL, exact revision, license
 or permission, affected files, and required notices here and alongside the code.

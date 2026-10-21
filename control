@@ -1,6 +1,6 @@
 Package: io.github.raimexlp.little16r
 Name: Little16R
-Version: 0.2.0~alpha1
+Version: 0.2.1~alpha1
 Architecture: iphoneos-arm
 Description: Experimental iOS 15 gesture navigation for rootful iPhone 7.
 Maintainer: Leon Prinz <41763410+RaimeXLP@users.noreply.github.com>
