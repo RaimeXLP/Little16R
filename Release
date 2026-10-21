@@ -1,0 +1,28 @@
+Origin: Little16R by Leon Prinz
+Label: Little16R
+Suite: experimental
+Codename: little16r
+Architectures: iphoneos-arm
+Description: Experimental rootful iPhone 7 gesture navigation
+Date: Wed, 21 Oct 2026 18:19:15 GMT
+Acquire-By-Hash: yes
+MD5Sum:
+ bc4cf66666a77c090a55004f56cc5d88 980 Packages
+ 2610d48b2d11280d439fd93afb94a5f9 618 Packages.gz
+ 4fd196e25e5be353f1788dace78f7152 690 Packages.bz2
+ 0ec9ded5e251f76399a7ba0e18a69433 688 Packages.xz
+SHA1:
+ da965c8ac3f47e2cc37df03eb7c372d69027536f 980 Packages
+ fde3502dc8eef6a126b6330882c974468a8507ce 618 Packages.gz
+ 96c519130632360ecd0d86588e8aca66bc7a7e26 690 Packages.bz2
+ eaa30a93ea32a3f80d28647266ed1ed0f55cec1c 688 Packages.xz
+SHA256:
+ 294f5f6e2cb8be8c0bb0d3be9a38b0ce6a902fb80b3ae82a49929aa157c7f974 980 Packages
+ 3a96363fa48335b545697bc06dbabb6b66081d83c82398ab2cefbb3ba9b328d4 618 Packages.gz
+ 2f36fd9665e41e217c9fb0b570d374615f8c6eb7930204b95d9f8797453c167f 690 Packages.bz2
+ f8669dcf5c6f8a82ea9ec822accc893294d0d3963a5f052ec17ba3d378a12480 688 Packages.xz
+SHA512:
+ cea20ec836f6e422613d199d116ad076390a974d51c3aa23a219baa0bf324f9eac9e451b09c259d98b4f2f9cea5eaad391c5cbe587c9e17f683a6c24b25e80d6 980 Packages
+ 3530e1ca18f6356ef36c9b2a815d149d6371256088d47e02cd9e7d4b09344ad896a376f2cb65c6ad76f21218cadc1ad6d8d958350906b4cc6cc0b17e81444290 618 Packages.gz
+ 7a7993cd5243cb37d6429777b780d4a6db3be7880029154814d6010b35d8d19fbb7ace9bcda275f61269e7854f1c52ba5c187b03aa65bc6fce9adefc32510381 690 Packages.bz2
+ 729796d1e9f7cbba46e84337db0257abac7ab51a1e1b47a6b5ebe3bb2954c3390e4dd62beb3be4d27c2894cb4a9cc2c091fd4e1915117d3cf711ab131fb19ef7 688 Packages.xz
