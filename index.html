@@ -1,36 +1,113 @@
 <!doctype html>
 <html lang="de">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Little16R · Sileo-Quelle von Leon Prinz</title>
-<style>
-  :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
-  body { max-width: 44rem; margin: 3rem auto; padding: 0 1.2rem; line-height: 1.6; }
-  code { overflow-wrap: anywhere; }
-  a { color: light-dark(#075dc6, #83b9ff); }
-</style>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Little16R: Wischsteuerung für das iPhone 7. Paketquelle direkt zu Sileo, Cydia, Zebra, Installer oder Saily hinzufügen.">
+  <title>Little16R · Paketquelle von Leon Prinz</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f3f5f7; color: #182331;
+      --card: #fff; --border: #d9e0e7; --link: #0759b8; --muted: #526071;
+    }
+    * { box-sizing: border-box; }
+    body { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem; line-height: 1.65; }
+    h1 { font-size: 2.5rem; line-height: 1.15; margin: 0 0 .5rem; letter-spacing: -.04em; }
+    h2 { font-size: 1.3rem; line-height: 1.35; margin-top: 0; }
+    a { color: var(--link); }
+    .byline, .hint { color: var(--muted); }
+    .badge { display: inline-block; font-size: .85rem; font-weight: 600; margin: .25rem 0; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 1.25rem; padding: 1.25rem; margin: 1.5rem 0; }
+    .managers { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .75rem; }
+    .manager, button {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 3rem; padding: .8rem 1rem; border: 0; border-radius: .75rem;
+      font: inherit; font-weight: 650; line-height: 1.35; text-decoration: none;
+      cursor: pointer; color: #fff; background: #26384d;
+    }
+    .sileo { background: #07737d; }
+    .cydia { background: #91552f; }
+    .zebra { background: #303b49; }
+    .installer { background: #355ab0; }
+    .saily { background: #704ca8; }
+    a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid #159daa; outline-offset: 3px; }
+    .manager:hover, button:hover { filter: brightness(1.12); }
+    label { display: block; font-weight: 600; margin: 1.25rem 0 .5rem; }
+    input { width: 100%; padding: .8rem; border: 1px solid var(--border); border-radius: .6rem; background: var(--card); color: inherit; font: 16px ui-monospace, monospace; }
+    .copy { margin-top: .75rem; width: 100%; background: #26384d; }
+    .hint { font-size: .9rem; }
+    #copy-status { min-height: 1.5em; margin-bottom: 0; }
+    footer { border-top: 1px solid var(--border); margin-top: 2rem; padding-top: 1rem; font-size: .9rem; }
+    @media (prefers-color-scheme: dark) {
+      :root { background: #101820; color: #edf2f7; --card: #18232f; --border: #344252; --link: #8bc2ff; --muted: #b1bfce; }
+    }
+  </style>
+</head>
+<body>
 <main>
   <h1>Little16R</h1>
-  <p>Die Sileo-Paketquelle von Leon Prinz / RaimeXLP.</p>
-  <p>Experimentelle Wischsteuerung für das iPhone 7 mit iOS 15 und einem
-    <strong>Rootful-Jailbreak</strong>. Die Builds sind kompiliert und auf ihre
-    Paketstruktur geprüft. Gesten und Homebar sind noch nicht am Gerät bestätigt.</p>
-  <h2>In Sileo hinzufügen</h2>
-  <p>Öffne <strong>Sileo → Quellen → +</strong> und füge diese Adresse hinzu:</p>
-  <p><code>https://raimexlp.github.io/Little16R/</code></p>
-  <p>Suche anschließend nach <strong>Little16R</strong>. Prüfe vor dem ersten Test,
-    ob dein Jailbreak Rootful und sein Tweak-Loader kompatibel sind. Nach der
-    Installation ist ein Respring erforderlich.</p>
+  <p class="byline">Eine Paketquelle von Leon Prinz / RaimeXLP.</p>
+  <p class="badge">iPhone 7 · iOS 15 · Rootful</p>
+  <p>Wischsteuerung für ein iPhone mit defektem Home-Button. Experimenteller
+    Prototyp: Der Build ist geprüft, der Funktionstest am Gerät steht noch aus.</p>
+
+  <section class="card" aria-labelledby="add-title">
+    <h2 id="add-title">Paketquelle hinzufügen</h2>
+    <p>Öffne diese Seite auf deinem iPhone und wähle deinen Paketmanager:</p>
+    <nav class="managers" aria-label="Quelle im Paketmanager öffnen" aria-describedby="app-hint">
+      <a class="manager sileo" href="sileo://source/https://raimexlp.github.io/little16r/">Zu Sileo hinzufügen</a>
+      <a class="manager cydia" href="cydia://url/https://cydia.saurik.com/api/share#?source=https://raimexlp.github.io/little16r/">Zu Cydia hinzufügen</a>
+      <a class="manager zebra" href="zbra://sources/add/https://raimexlp.github.io/little16r/">Zu Zebra hinzufügen</a>
+      <a class="manager installer" href="installer://add/https://raimexlp.github.io/little16r/">Zu Installer hinzufügen</a>
+      <a class="manager saily" href="apt-repo://https://raimexlp.github.io/little16r/">Zu Saily hinzufügen</a>
+    </nav>
+    <p class="hint" id="app-hint">Der gewählte Paketmanager muss installiert sein.
+      Bestätige dort das Hinzufügen der Quelle.</p>
+    <label for="repo-url">Oder die Adresse manuell eintragen</label>
+    <input id="repo-url" type="url" value="https://raimexlp.github.io/little16r/" readonly spellcheck="false" autocapitalize="none" aria-describedby="copy-status">
+    <button class="copy" id="copy-url" type="button">Adresse kopieren</button>
+    <p class="hint" id="copy-status" role="status" aria-live="polite"></p>
+  </section>
+
+  <section aria-labelledby="install-title">
+    <h2 id="install-title">Anschließend Little16R installieren</h2>
+    <p>Aktualisiere die Quellen, suche nach <strong>Little16R</strong> und installiere
+      das Paket. Danach ist ein Respring erforderlich. Prüfe vor dem ersten Test,
+      ob dein Jailbreak Rootful und sein Tweak-Loader kompatibel sind. Gesten und
+      Homebar sind noch nicht am Gerät bestätigt.</p>
+  </section>
+  <footer>
   <p>Mit Dank an Michael Melita für
     <a href="https://github.com/michaelmelita1/Little16">Little16</a>
     und an die weiteren in den
-    <a href="https://github.com/RaimeXLP/Little16R/blob/main/CREDITS.md">Credits</a>
+    <a href="https://github.com/RaimeXLP/little16r/blob/main/CREDITS.md">Credits</a>
     genannten Entwickler und Projekte.</p>
   <p>Bei Fragen zur Herkunft, Attribution oder Veröffentlichung bitte ein
-    <a href="https://github.com/RaimeXLP/Little16R/issues/new">Issue öffnen</a>.
+    <a href="https://github.com/RaimeXLP/little16r/issues/new">Issue öffnen</a>.
     Wenn der ursprüngliche Ersteller die Veröffentlichung nicht möchte,
     nehme ich das Projekt und die Paketquelle gerne offline.</p>
-  <p><a href="https://github.com/RaimeXLP/Little16R">Quellcode und Anleitung</a>
+  <p><a href="https://github.com/RaimeXLP/little16r">Quellcode und Anleitung</a>
     · <a href="build-info.json">Aktueller Build</a></p>
+  </footer>
 </main>
+<script>
+  document.getElementById('copy-url').addEventListener('click', async function () {
+    var input = document.getElementById('repo-url');
+    var status = document.getElementById('copy-status');
+    try {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(input.value);
+      status.textContent = 'Adresse kopiert.';
+    } catch (error) {
+      input.focus();
+      input.select();
+      input.setSelectionRange(0, input.value.length);
+      status.textContent = document.execCommand('copy')
+        ? 'Adresse kopiert.' : 'Bitte die markierte Adresse kopieren.';
+    }
+  });
+</script>
+</body>
 </html>
