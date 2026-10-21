@@ -112,6 +112,7 @@ def build_repository(packages, output, template, source_commit, build_url):
         "Label: Little16R\n"
         "Suite: experimental\n"
         "Codename: little16r\n"
+        "Components: main\n"
         "Architectures: iphoneos-arm\n"
         "Description: Experimental rootful iPhone 7 gesture navigation\n"
         f"Date: {format_datetime(datetime.now(timezone.utc), usegmt=True)}\n"

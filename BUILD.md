@@ -51,6 +51,11 @@ It expects exactly one incoming `.deb` in the packages directory. Existing versi
 in the output's `pool/` directory are retained. The output folder is what Pages
 serves, and its URL is what users add in Sileo.
 
+Sileo requires a `Components` field even for a flat source, so `Release` includes
+`Components: main`. Before publication, regression checks cover this Sileo
+requirement, package paths, and index/download checksums. Run them locally with
+`python3 -B -m unittest discover -s tests -v`.
+
 ## Build locally
 
 Install Theos using its official instructions:

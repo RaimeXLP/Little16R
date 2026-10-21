@@ -122,6 +122,9 @@ jobs:
           --packages packages --output published --template source/repo
           --source-commit "$GITHUB_SHA" --build-url "$BUILD_URL"
 
+      - name: Check Sileo repository compatibility
+        run: python3 -B -m unittest discover -s source/tests -v
+
       - name: Archive published packages under maintainer identity
         shell: bash
         run: |
