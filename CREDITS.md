@@ -8,8 +8,19 @@ iPhone X-style gestures to an older iPhone.
 
 Little16R was initiated because the target iPhone 7 uses a rootful jailbreak,
 whereas the published Little16 package targets rootless jailbreaks. We appreciate
-Michael Melita making the project publicly viewable. This scaffold does not
-incorporate Little16 source code and does not claim his endorsement.
+Michael Melita making the project publicly viewable. The implementation was
+written independently; it uses private iOS method names informed by the research
+into Little16, but does not copy its implementation or claim his endorsement.
+
+## Project maintainer
+
+Leon Prinz ([RaimeXLP](https://github.com/RaimeXLP)).
+
+## Development tools and API references
+
+- [Theos](https://theos.dev/) — build and packaging toolchain.
+- [Cydia Substrate](https://www.cydiasubstrate.com/api/c/MSHookMessageEx/) —
+  Objective-C method-hooking API.
 
 ## Earlier projects acknowledged by Little16
 

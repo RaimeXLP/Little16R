@@ -1,5 +1,13 @@
 # Implementation plan
 
+## Current progress
+
+The 0.1.0-alpha1 source prototype and manual build workflow are prepared. Runtime
+guards, SpringBoard-only filtering, rootful package metadata, and diagnostic logs
+are implemented in source. Compilation, loader compatibility, device behavior,
+and Home indicator appearance remain unverified. The checklist below defines
+remaining validation as well as intended design; it is not a list of passed tests.
+
 ## 1. Establish the device environment
 
 - Record the jailbreak name/version and confirm rootful packaging.
