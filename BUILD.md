@@ -2,23 +2,54 @@
 
 ## Status
 
-The source is an experimental prototype, not a verified working release. It has
-not been compiled or run on an iPhone in the preparation environment. The build
-workflow has not yet run. Do not interpret an uploaded source ZIP as an installable tweak.
+The experimental prototype has successfully compiled in GitHub Actions and passed
+rootful package layout and arm64 checks. It has not yet been run on an iPhone.
+Compiled packages are published at https://raimexlp.github.io/Little16R/.
 
 ## Build on GitHub
 
-1. Upload the files and folders from this project to the root of `RaimeXLP/Little16R`.
-   In particular, the workflow must be `.github/workflows/build.yml`, not `build.yml`
-   at the repository root. Your file manager may hide `.github` and `.gitignore`.
-2. Open **Actions → Build rootful prototype → Run workflow**.
-3. Wait for a successful build. Download the `Little16R-rootful-alpha` artifact.
-4. Extract the artifact to obtain the `.deb`. A successful build checks packaging,
-   not whether gestures work on iOS 15.8.8.
+Push changes to `main`, or open **Actions → Build rootful prototype → Run workflow**
+and select `main`. After the build and package checks pass, the publication job
+updates the Sileo source. The `Little16R-rootful-alpha` artifact remains available
+for direct `.deb` downloads for 14 days.
 
-The workflow is manual, has read-only repository permissions, and does not create
-commits, publish releases, or install anything on a device. GitHub Actions and
-Theos revisions are pinned; the macOS runner, Xcode and Homebrew packages are not.
+The package version is the base `Version` in `control` plus
+`+build.<workflow run number>.<run attempt>`. Each new build or rerun has a distinct
+version, allowing Sileo to recognize updates without replacing older downloads.
+Increase the base version in `control` for a new development milestone.
+
+The build job has read-only repository access. The publication job can update the
+`gh-pages` package archive and deploy GitHub Pages using its short-lived workflow
+token. Archive commits explicitly use Leon Prinz / RaimeXLP as author and committer,
+with no co-author trailer. Publication does not modify `main` or create releases.
+The workflow does not install anything on a device. Actions and Theos revisions
+are pinned; macOS/Ubuntu runners, Xcode and Homebrew packages are not.
+
+## Package source layout
+
+GitHub Pages uses **GitHub Actions** as its build source. The `gh-pages` branch
+stores the generated files and versioned `.deb` downloads. `scripts/build_repo.py`
+generates flat APT metadata (`Release`, `Packages`, and gzip/bzip2/xz indices),
+checks package identity/architecture, records hashes and build provenance, and
+keeps older packages and index hashes for cached clients. Existing package files
+cannot be replaced with different bytes under the same filename.
+
+The Pages artifact is exported with `git archive`, so it contains only committed
+public files and no Git credentials. Only successful `main` builds publish; builds
+dispatched against other branches do not change the Sileo source. Publication runs
+are serialized. The source uses HTTPS and checksummed metadata without an OpenPGP
+repository signature.
+
+The repository generator uses only the Python 3 standard library. It can also run locally:
+
+```sh
+python3 scripts/build_repo.py --packages packages --output /tmp/little16r-repo \
+  --template repo --source-commit "$(git rev-parse HEAD)" --build-url local
+```
+
+It expects exactly one incoming `.deb` in the packages directory. Existing versions
+in the output's `pool/` directory are retained. The output folder is what Pages
+serves, and its URL is what users add in Sileo.
 
 ## Build locally
 

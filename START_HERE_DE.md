@@ -1,39 +1,45 @@
-# Little16R: erster Build
+# Little16R in Sileo installieren
 
-Diese ZIP enthält Quellcode für einen experimentellen Rootful-Prototyp.
-Sie enthält keine installierbare `.deb`. Noch nicht auf einem iPhone getestet.
+## 1. Quelle hinzufügen
 
-## 1. Dateien hochladen
+Öffne **Sileo → Quellen → +** und füge diese Adresse hinzu:
 
-ZIP entpacken. Den Inhalt des Ordners `Little16R` ins Hauptverzeichnis deines
-GitHub-Repositories hochladen. Vorhandene README, Credits und Plan aktualisieren.
-`Tweak.m`, `Makefile`, `control` und `Little16R.plist` müssen direkt im
-Hauptverzeichnis liegen, nicht in einem zusätzlichen Unterordner `Little16R`.
+**https://raimexlp.github.io/Little16R/**
 
-Der Build braucht außerdem `.github/workflows/build.yml`. Falls der Ordner
-beim Hochladen nicht sichtbar ist, kannst du diese Datei auf GitHub über
-**Add file → Create new file** unter genau diesem Namen anlegen und ihren
-vollständigen Inhalt aus der ZIP einfügen.
+Aktualisiere die Quellen und suche nach **Little16R**. Der Link zum GitHub-Quellcode
+ist eine andere Adresse und wird nicht als Sileo-Quelle eingetragen.
 
-## 2. Build starten
+## 2. Ersten Gerätetest vorbereiten
 
-Unter **Actions → Build rootful prototype → Run workflow** manuell starten.
-Falls GitHub die Aktivierung von Actions verlangt, aktiviere sie für dieses Repo.
+Das Paket ist für **Rootful-Jailbreaks** gebaut, zunächst für ein iPhone 7 mit
+iOS 15.8.8. Der genaue Jailbreak und Tweak-Loader müssen dazu passen. Kläre vor
+dem ersten Test auch, wie du den Tweak bei einem SpringBoard-Absturz wieder
+deaktivierst oder entfernst. Entferne andere Gesten-Tweaks vor dem Test.
 
-Der Workflow baut und prüft das Paket. Er erstellt keine Commits und verändert
-keine Dateien im Repository. Es kommt dadurch kein zusätzlicher Commit-Autor hinzu.
+Der Build und die Paketprüfungen laufen erfolgreich. Die Funktion auf einem
+iPhone ist bisher noch nicht bestätigt; auch die sichtbare Homebar ist offen.
 
-## 3. Ergebnis prüfen
+## 3. Paket installieren
 
-Bei einem erfolgreichen Durchlauf liegt unter **Artifacts** ein Download namens
-`Little16R-rootful-alpha`. Darin befindet sich die `.deb`.
+Wähle Little16R in Sileo aus, bestätige die Installation und führe anschließend
+den angebotenen Respring aus. Es gibt kein Einstellungsmenü: Der Prototyp versucht
+beim Laden in SpringBoard, die Gesten zu aktivieren.
 
-Bei einem Fehler bitte den fehlgeschlagenen Schritt oder dessen Log weitergeben.
-Ein erfolgreicher Build bedeutet noch nicht, dass die Gesten auf iOS 15.8.8 laufen.
+Teste zuerst Home-Geste, App-Wechsler und Kontrollzentrum. Prüfe die Homebar
+gesondert, auch innerhalb von Apps. Funktioniert etwas nicht, sind der genaue
+Jailbreak, der Tweak-Loader und die `[Little16R]`-Meldungen im Systemlog hilfreich.
 
-Vor der Installation müssen Jailbreak und Tweak-Loader feststehen, einschließlich
-eines funktionierenden Weges zum Deaktivieren von Tweaks bei einem SpringBoard-Absturz.
-Der Prototyp hat kein Einstellungsmenü und versucht beim Laden, die Gesten zu aktivieren.
-Die sichtbare Homebar, besonders innerhalb von Apps, ist noch unbestätigt.
+## Updates und direkter Download
+
+Neue erfolgreiche Builds von `main` werden automatisch in der Paketquelle
+veröffentlicht. Jeder Build bekommt eine eigene Versionsnummer, sodass Sileo
+neue Pakete als Update erkennen kann. In Sileo gegebenenfalls die Quellen
+aktualisieren, bevor du nach Updates suchst.
+
+Die `.deb` gibt es zusätzlich beim jeweiligen GitHub-Actions-Lauf unter
+**Artifacts → Little16R-rootful-alpha**. Nach dem Entpacken kannst du sie direkt
+an Sileo übergeben. Diese Build-Artefakte bleiben 14 Tage verfügbar; die
+veröffentlichten Paketdateien bleiben in der Quelle erhalten.
 
 Weitere technische Informationen: [BUILD.md](BUILD.md).
+Credits, Herkunft und Kontakt: [CREDITS.md](CREDITS.md).

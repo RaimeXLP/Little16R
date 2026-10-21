@@ -1,57 +1,79 @@
 # Little16R
 
-Experimental iPhone X-style gesture navigation for rootful jailbreaks. **R stands for Rootful.**
+Experimental iPhone X-style gesture navigation for rootful jailbreaks.
+**R stands for Rootful.** Maintained by Leon Prinz ([RaimeXLP](https://github.com/RaimeXLP)).
 
-## Status
+## Install through Sileo
 
-Version 0.1.0-alpha1 is an independently written source prototype, not a working
-release. It has **not been compiled or tested on a device**. No `.deb` is included.
-The initial target is an iPhone 7 (arm64/A10) running iOS 15.8.8 with a rootful jailbreak.
-The runtime guard allows only iPhone7 identifiers `iPhone9,1` / `iPhone9,3` on iOS 15.
-See [BUILD.md](BUILD.md) for the manual GitHub Actions build and testing procedure.
+Add this package source in **Sileo → Sources → +**:
 
-## Why this project exists
+**https://raimexlp.github.io/Little16R/**
 
-The target iPhone has a broken Home button and needs swipe navigation. Little16
-inspired this project, but its published rootless package does not match the
-target rootful environment. Little16R aims to provide a small implementation
-focused on navigation for this setup.
+Refresh sources, search for **Little16R**, install it, and respring. Remove
+competing gesture tweaks before testing. The package requires a **rootful**
+jailbreak with a compatible Substrate API provider; confirm the active jailbreak
+and tweak loader before the first installation.
 
-## Intended features
+New successful builds from `main` are published to this source automatically.
+Each build receives its own package version, so Sileo can offer subsequent
+builds as updates. Older package files remain available for cached downloads.
+The GitHub source-code URL itself is not a Sileo source.
+
+See [START_HERE_DE.md](START_HERE_DE.md) for the German installation guide.
+
+## Status and scope
+
+The `0.1.0-alpha1` prototype has successfully compiled and passed rootful package
+layout and arm64 checks in [GitHub Actions](https://github.com/RaimeXLP/Little16R/actions).
+**It has not yet been tested on an iPhone.** A successful build does not confirm
+working gestures, loader compatibility, or a visible Home indicator.
+
+The initial target is an iPhone 7 (arm64/A10) on iOS 15.8.8 with a rootful jailbreak.
+Runtime checks currently restrict activation to `iPhone9,1` / `iPhone9,3` on iOS 15.
+There is no Settings pane; the prototype attempts to activate when loaded into
+SpringBoard. It collects or transmits no user data.
+
+Intended features:
 
 - Swipe up to return Home.
 - Swipe up and hold to open the app switcher.
 - Swipe down from the top-right corner to open Control Center.
-- A visible Home indicator (experimental setting; in-app visibility is unresolved).
+- A visible Home indicator, whose appearance inside applications remains unresolved.
 
-An iPad dock, a replacement status bar, and additional lock-screen buttons are
-outside the initial scope.
+An iPad dock, a replacement status bar, and lock-screen quick actions are outside
+the initial scope. See [PLAN.md](PLAN.md) for the remaining device checks and
+[BUILD.md](BUILD.md) for build, publication, and diagnostic information.
 
-## Development approach
+## Why Little16R exists
 
-Use Theos, Objective-C and Substrate's hook API to interact with the existing iOS gesture system.
-Build an arm64 rootful Debian package (`iphoneos-arm` package architecture).
-The package architecture label is separate from the CPU architecture.
+My iPhone 7 has a broken Home button, and I wanted to keep using it with swipe
+navigation. [Little16](https://github.com/michaelmelita1/Little16) by
+[Michael Melita](https://github.com/michaelmelita1) inspired this project. Its
+published rootless package did not fit the rootful setup targeted here, so I
+started this small, independently written prototype focused on navigation.
 
-Before installation, identify the active jailbreak and its tweak loader.
-The prototype checks private method signatures at runtime and logs missing methods.
-These checks do not verify method semantics or guarantee crash-free operation.
-A successful build alone will not establish runtime compatibility.
+Thank you, Michael, and everyone whose earlier work helped make these ideas
+accessible. The [credits and source references](CREDITS.md) explain what each
+project contributed to the research and which tools this prototype actually uses.
+Little16R is an independent project and does not claim to be an official Little16
+release or to have its creator's endorsement.
 
-There is no Settings pane. Hooks activate when the tweak loads into SpringBoard.
-No user data is collected or transmitted by the tweak.
+## A note from Leon to the original creator and contributors
 
-See [PLAN.md](PLAN.md) for implementation and device checks, and
-[CREDITS.md](CREDITS.md) for inspiration and attribution.
+I mean this project in a friendly spirit and have no wish to cause bad feelings
+with Michael or any other original contributor. When I looked at Little16 on
+2026-10-21, I could not find a license file in the repository. This prototype was
+written separately; Little16's source and compiled package are not bundled here.
+The private gesture selectors researched in Little16 are explicitly acknowledged
+in [CREDITS.md](CREDITS.md).
 
-## Source and licensing status
+**If you are the original creator and would prefer this project not to be online,
+please [open an issue](https://github.com/RaimeXLP/Little16R/issues/new). I am happy
+to take the project, the published package source, and its downloads offline.**
+The same contact route is open to contributors who want a credit corrected,
+expanded, or added. I want to handle concerns respectfully and directly.
 
-This project does not include copied Little16 source code or its compiled package.
-At inspection on 2026-10-21, the Little16 repository did not declare a license.
-Attribution is not treated as a grant to redistribute or relicense its code.
-The current implementation is independently written using the Objective-C runtime
-and Substrate API. Future third-party code must have an explicit compatible license
-with the required notices preserved. This repository does not yet grant a general
-redistribution license for its own source.
-
-Little16R is an independent project and is not an official Little16 release.
+This repository does not currently declare a general redistribution license for
+its own source. Any future third-party code will need its permission and notices
+recorded alongside the relevant files. Attribution here documents the work and
+research behind the project; it does not claim ownership of anyone else's work.
