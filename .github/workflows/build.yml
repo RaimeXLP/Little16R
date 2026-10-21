@@ -1,0 +1,65 @@
+name: Build rootful prototype
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 20
+    env:
+      THEOS: ${{ runner.temp }}/little16r-theos
+      THEOS_PACKAGE_SCHEME: ""
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+
+      - name: Install build tools
+        run: brew install make ldid xz dpkg
+
+      - name: Fetch pinned Theos
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init "$THEOS"
+          git -C "$THEOS" remote add origin https://github.com/theos/theos.git
+          git -C "$THEOS" fetch --depth=1 origin 304e0799973e8145f32e4ca2de6c747a84b758ce
+          git -C "$THEOS" checkout --detach FETCH_HEAD
+          git -C "$THEOS" submodule update --init --recursive --depth=1
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-path
+
+      - name: Build rootful package
+        run: gmake clean package
+
+      - name: Check package architecture and layout
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          packages=(packages/*.deb)
+          test "${#packages[@]}" -eq 1
+          package="${packages[0]}"
+          test "$(dpkg-deb -f "$package" Architecture)" = "iphoneos-arm"
+          test "$(dpkg-deb -f "$package" Package)" = "io.github.raimexlp.little16r"
+          extraction="$RUNNER_TEMP/little16r-package-check"
+          mkdir -p "$extraction"
+          dpkg-deb -x "$package" "$extraction"
+          test -f "$extraction/Library/MobileSubstrate/DynamicLibraries/Little16R.dylib"
+          test -f "$extraction/Library/MobileSubstrate/DynamicLibraries/Little16R.plist"
+          test ! -d "$extraction/var/jb"
+          xcrun lipo -verify_arch arm64 "$extraction/Library/MobileSubstrate/DynamicLibraries/Little16R.dylib"
+          xcrun otool -L "$extraction/Library/MobileSubstrate/DynamicLibraries/Little16R.dylib"
+
+      - name: Upload package for manual device testing
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: Little16R-rootful-alpha
+          path: packages/*.deb
+          if-no-files-found: error
+          retention-days: 14
