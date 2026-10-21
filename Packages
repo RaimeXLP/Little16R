@@ -55,3 +55,22 @@ SHA1: 449ccb0633c1badacb2346e77945f2596e315315
 SHA256: 35d9ce7fd171f2fdee442b9dae01115f2169567e17825fee6d66fcaeba083d73
 SHA512: 3fc6a723f94af05ff4ee37559b2b394de96b333f6c05e0ae04157893b70c6a70379762ff989bc771ec700a1ae0a0df48b7e444dc0abd601f47120620b2f0e14a
 
+Package: io.github.raimexlp.little16r
+Name: Little16R
+Description: Experimental iOS 15 gesture navigation for rootful iPhone 7.
+Maintainer: Leon Prinz <41763410+RaimeXLP@users.noreply.github.com>
+Author: Leon Prinz
+Section: Tweaks
+Depends: mobilesubstrate, firmware (>= 15.0), firmware (<< 16.0)
+Conflicts: com.nahtedetihw.gesturesxv, com.michaelmelita1.little16, com.yourepo.i0s-tweak3r-betas.homegestureios1315, com.yourepo.i0s-tweak3r-betas.homegesture1316
+Homepage: https://github.com/RaimeXLP/little16r
+Architecture: iphoneos-arm
+Version: 0.1.0~alpha1+build.8.1
+Installed-Size: 72
+Filename: pool/io.github.raimexlp.little16r_0.1.0~alpha1+build.8.1_iphoneos-arm.deb
+Size: 4214
+MD5sum: 3ffcb74e7fbb4e35606e20382d3bd801
+SHA1: d65c2f9bf1f8938c5f0dda730049b4ae67f798e5
+SHA256: 8a58c8182f4545fed96afd804c422e6527768f606ea2c183ae58a3f4fa467ea1
+SHA512: 1504530855663f8783d241b727f2f97125fd87042e49fe31195b8792032bcb1fa6e6122d5c19cd046529bbbbb5de311996a4e823f9b234b0c0a6b27f5b28de35
+
