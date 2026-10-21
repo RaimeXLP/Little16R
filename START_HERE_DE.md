@@ -27,8 +27,17 @@ iPhone ist bisher noch nicht bestätigt; auch die sichtbare Homebar ist offen.
 
 ## 3. Paket installieren
 
-Wähle Little16R in Sileo aus, bestätige die Installation und führe anschließend
-den angebotenen Respring aus. Es gibt kein Einstellungsmenü: Der Prototyp versucht
+Wähle Little16R in Sileo aus und bestätige die Installation. Am Ende fordert das
+Paket über Sileos Installationsabschluss einen Respring an. Tippe auf
+**SpringBoard neu starten / Respring**. Sileo führt den Neustart aus.
+
+Falls du einen älteren Build ohne diese Aufforderung installiert hast:
+Aktualisiere in Sileo die Quellen und aktualisiere anschließend Little16R auf
+die neueste Version. Nach diesem Update wird der Respring angefordert. Ist die
+neueste Version bereits installiert, kannst du sie über **Ändern → Erneut
+installieren** nochmals installieren, um die Abschlussaktion zu erhalten.
+
+Es gibt kein Einstellungsmenü: Der Prototyp versucht
 beim Laden in SpringBoard, die Gesten zu aktivieren.
 
 Teste zuerst Home-Geste, App-Wechsler und Kontrollzentrum. Prüfe die Homebar

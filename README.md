@@ -19,6 +19,11 @@ competing gesture tweaks before testing. The package requires a **rootful**
 jailbreak with a compatible Substrate API provider; confirm the active jailbreak
 and tweak loader before the first installation.
 
+The package requests **Restart SpringBoard / Respring** through Sileo's standard
+installation-completion action after installation, update, or reinstallation.
+If an older build was installed without a respring button, refresh sources and
+update Little16R; then use the completion button at the end of that installation.
+
 New successful builds from `main` are published to this source automatically.
 Each build receives its own package version, so Sileo can offer subsequent
 builds as updates. Older package files remain available for cached downloads.

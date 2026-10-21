@@ -1,0 +1,21 @@
+#!/bin/sh
+# Request Sileo/Cydia's standard completion action after configuration.
+# The package manager controls when the requested respring is performed.
+
+if [ "${1:-}" != "configure" ]; then
+    exit 0
+fi
+
+for finish_channel in "${SILEO:-}" "${CYDIA:-}"; do
+    finish_fd=${finish_channel%% *}
+    case "$finish_fd" in
+        ''|*[!0-9]*) continue ;;
+    esac
+
+    # Isolate a missing/closed descriptor so CLI installs can still succeed.
+    if (printf '%s\n' 'finish:restart' >&"$finish_fd") 2>/dev/null; then
+        break
+    fi
+done
+
+exit 0

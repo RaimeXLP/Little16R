@@ -77,6 +77,18 @@ after installation. There is no Settings pane: this prototype activates on load.
 
 ## Before the first device test
 
+`layout/DEBIAN/postinst` requests Sileo/Cydia's `finish:restart` completion action
+when dpkg calls it with `configure`, covering installation, upgrades, and
+reinstallation. It writes to the manager-provided `SILEO`/`CYDIA` file descriptor;
+the manager controls the respring. The script does not call a restart utility.
+CLI installs without a completion channel still succeed and need a manual
+respring. `INSTALL_TARGET_PROCESSES` in the Makefile applies to Theos's local
+install command and does not by itself request Sileo's completion button.
+
+CI verifies that the executable postinst script is included in the built `.deb`.
+Tests exercise the completion pipe, Cydia fallback, missing/invalid descriptors,
+and recovery actions without restarting any process.
+
 Record the jailbreak name/version and verify that its loader supports Substrate's
 `MSHookMessageEx` interface. A package manager showing an installed tweak is not
 proof that SpringBoard injection works. The `mobilesubstrate` dependency must be
