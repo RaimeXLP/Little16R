@@ -11,13 +11,15 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 20
     env:
-      THEOS: ${{ runner.temp }}/little16r-theos
       THEOS_PACKAGE_SCHEME: ""
     steps:
       - name: Check out source
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+
+      - name: Configure Theos path
+        run: printf 'THEOS=%s/little16r-theos\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
 
       - name: Install build tools
         run: brew install make ldid xz dpkg
